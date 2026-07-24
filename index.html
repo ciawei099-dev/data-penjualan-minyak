@@ -3,54 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Pengiriman</title>
+    <title>Sistem Rekap Pengiriman</title>
     <link rel="stylesheet" href="style.css">
-    <!-- html2pdf Library untuk unduh PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
     <div class="container">
-        <!-- Header -->
         <header class="header">
             <h1>Data Pengiriman</h1>
             <p>Input dan kelola data pengiriman barang dengan perhitungan otomatis</p>
         </header>
 
-        <!-- Form Card -->
         <section class="card">
             <h2>+ Tambah Data Baru</h2>
             <form id="shipping-form" class="form-grid">
                 <div class="form-group">
-    <label for="tanggal">Tanggal</label>
-    <input type="date" id="tanggal" required>
-</div>
-
+                    <label for="tanggal">Tanggal</label>
+                    <input type="date" id="tanggal" required>
+                </div>
                 <div class="form-group">
                     <label for="supir">Supir</label>
                     <input type="text" id="supir" placeholder="Nama Supir" required>
                 </div>
-
                 <div class="form-group">
                     <label for="mobil">Mobil</label>
                     <input type="text" id="mobil" placeholder="No. Polisi / Jenis" required>
                 </div>
-
                 <div class="form-group">
                     <label for="jumlah-drum">Jumlah Drum</label>
                     <input type="number" id="jumlah-drum" placeholder="0" min="0" required>
                 </div>
-
                 <div class="form-group">
                     <label for="harga-drum">Harga per Drum (Rp)</label>
                     <input type="number" id="harga-drum" placeholder="0" min="0" required>
                 </div>
-
+                <div class="form-group">
+                    <label for="keterangan">Keterangan</label>
+                    <input type="text" id="keterangan" placeholder="Contoh: Lunas / Titip Bensin / dll">
+                </div>
                 <div class="form-group">
                     <label>Total Estimasi</label>
                     <div class="total-preview" id="total-estimasi">Rp 0</div>
                 </div>
-
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Tambah ke Tabel</button>
                     <button type="button" id="reset-form" class="btn btn-secondary">Reset Form</button>
@@ -58,15 +53,13 @@
             </form>
         </section>
 
-        <!-- Table Card -->
         <section class="card" id="print-area">
             <div class="table-header">
-                <h2>Tabel Rekapitulasi Data</h2>
+                <h2>Tabel Rekapitulasi Data Pengiriman</h2>
                 <span class="badge" id="data-count">0 Data</span>
             </div>
-
             <div class="table-responsive">
-                <table id="rekap-table">
+                <table>
                     <thead>
                         <tr>
                             <th>Tanggal</th>
@@ -75,26 +68,24 @@
                             <th>Drum</th>
                             <th>Harga</th>
                             <th>Total</th>
+                            <th>Keterangan</th>
                             <th class="no-print">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody id="table-body">
-                        <!-- Data akan dimasukkan lewat JS -->
-                    </tbody>
+                    <tbody id="table-body"></tbody>
                     <tfoot>
                         <tr>
                             <td colspan="3" class="text-bold">TOTAL REKAPITULASI</td>
                             <td id="grand-total-drum" class="text-bold">0</td>
                             <td class="text-bold">-</td>
                             <td id="grand-total-harga" class="text-bold">Rp 0</td>
+                            <td>-</td>
                             <td class="no-print"></td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
-
             <div class="action-buttons no-print">
-                <button type="button" id="add-empty-row" class="btn btn-outline">+ Tambah Baris Kosong</button>
                 <button type="button" id="download-pdf" class="btn btn-danger">📄 Unduh PDF Nota</button>
             </div>
         </section>
