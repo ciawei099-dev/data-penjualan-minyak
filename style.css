@@ -1,0 +1,240 @@
+:root {
+    --primary-color: #0d7a40;
+    --primary-hover: #09592e;
+    --secondary-color: #e0e0e0;
+    --secondary-hover: #cccccc;
+    --danger-color: #d93025;
+    --danger-hover: #b3261e;
+    --bg-color: #f4f6f8;
+    --card-bg: #ffffff;
+    --border-color: #e0e0e0;
+    --text-color: #333333;
+    --text-muted: #666666;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.header {
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+}
+
+.header h1 {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+}
+
+.header p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.card {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.card h2 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: #222;
+}
+
+/* Grid layout untuk form */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--text-muted);
+}
+
+.form-group input {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    outline: none;
+    font-size: 0.9rem;
+}
+
+.form-group input:focus {
+    border-color: var(--primary-color);
+}
+
+.total-preview {
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary-hover);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: var(--danger-hover);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px dashed var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline:hover {
+    background-color: #eaf5ee;
+}
+
+.btn-delete {
+    background-color: #ffebee;
+    color: var(--danger-color);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Tabel */
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.badge {
+    background-color: #e8f5e9;
+    color: var(--primary-color);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+tfoot {
+    background-color: #e8f5e9;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.empty-row {
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.action-buttons .btn {
+    flex: 1;
+}
+
+/* Responsif HP */
+@media (max-width: 600px) {
+    .form-actions, .action-buttons {
+        flex-direction: column;
+    }
+
+    .form-actions .btn, .action-buttons .btn {
+        width: 100%;
+    }
+}
