@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Render Table
+    // Render Table
     const renderTable = (data) => {
         tableBody.innerHTML = "";
         let totalDrum = 0, totalHarga = 0;
@@ -62,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${item.jumlah || 0}</td>
                 <td>${formatRupiah(item.harga)}</td>
                 <td>${formatRupiah(rowTotal)}</td>
-                <td>${item.keterangan || "-"}</td>
+                <td>${item.keterangan && item.keterangan !== "" ? item.keterangan : "-"}</td>
                 <td class="no-print">
                     <button class="btn-delete" onclick="deleteData(${index + 2})">Hapus</button>
                 </td>
@@ -74,36 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("grand-total-harga").textContent = formatRupiah(totalHarga);
         document.getElementById("data-count").textContent = `${data.length} Data`;
     };
-
-    // Submit Form
-    shippingForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const payload = {
-            action: "insert",
-            tanggal: document.getElementById("tanggal").value,
-            supir: document.getElementById("supir").value,
-            mobil: document.getElementById("mobil").value,
-            jumlah: parseInt(jumlahInput.value),
-            harga: parseFloat(hargaInput.value),
-            keterangan: document.getElementById("keterangan").value
-        };
-
-        await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) });
-        shippingForm.reset();
-        totalEstimasi.textContent = "Rp 0";
-        fetchData();
-    });
-
-    // Delete Data
-    window.deleteData = async (rowIndex) => {
-        if (!confirm("Hapus data ini?")) return;
-        await fetch(SCRIPT_URL, {
-            method: "POST",
-            body: JSON.stringify({ action: "delete", rowIndex: rowIndex })
-        });
-        fetchData();
-    };
-
     // Download PDF
     document.getElementById("download-pdf").addEventListener("click", () => {
         const element = document.getElementById("print-area");
