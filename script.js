@@ -37,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Render Table
-    // Render Table
     const renderTable = (data) => {
         tableBody.innerHTML = "";
         let totalDrum = 0, totalHarga = 0;
@@ -51,11 +50,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         data.forEach((item, index) => {
+            // Perhitungan Total per baris
             const rowTotal = (Number(item.jumlah) || 0) * (Number(item.harga) || 0);
             totalDrum += Number(item.jumlah) || 0;
             totalHarga += rowTotal;
 
             const tr = document.createElement("tr");
+            
+            // PASTIKAN ADA TEPAT 8 KOLOM <td> DI BAWAH INI
             tr.innerHTML = `
                 <td>${formatDateIndonesia(item.tanggal)}</td>
                 <td>${item.supir || "-"}</td>
