@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Submit Form
     if (shippingForm) {
         shippingForm.addEventListener("submit", async (e) => {
-            e.preventDefault(); // Mencegah form me-refresh halaman
+            e.preventDefault(); // Cegah refresh halaman
 
             if (submitBtn) {
                 submitBtn.disabled = true;
@@ -103,16 +103,26 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             try {
+                // Menggunakan mode no-cors atau format URLSearchParams untuk kompatibilitas penuh dengan Google Apps Script
                 await fetch(SCRIPT_URL, {
                     method: "POST",
+                    headers: {
+                        "Content-Type": "text/plain;charset=utf-8"
+                    },
                     body: JSON.stringify(payload)
                 });
+
                 shippingForm.reset();
                 if (totalEstimasi) totalEstimasi.textContent = "Rp 0";
-                await fetchData();
+                
+                // Beri jeda 1 detik agar Google Sheets selesai menulis data sebelum diambil ulang
+                setTimeout(() => {
+                    fetchData();
+                }, 1000);
+
             } catch (err) {
                 console.error(err);
-                alert("Gagal menyimpan data. Silakan coba lagi.");
+                alert("Gagal menyimpan data: " + err.message);
             } finally {
                 if (submitBtn) {
                     submitBtn.disabled = false;
@@ -121,7 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-
     // Reset Form Event
     const resetBtn = document.getElementById("reset-form");
     if (resetBtn && shippingForm) {
