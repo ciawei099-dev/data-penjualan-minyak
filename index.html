@@ -3,92 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Rekap Pengiriman</title>
+    <title>Sistem Operasional & Kasbon</title>
     <link rel="stylesheet" href="style.css">
+    <!-- html2pdf Library untuk unduh PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
     <div class="container">
-        <header class="header">
-            <h1>Data Pengiriman</h1>
-            <p>Input dan kelola data pengiriman barang dengan perhitungan otomatis</p>
+        <!-- Header Utama -->
+        <header class="header no-print">
+            <div class="header-content">
+                <h1>🚚 Dashboard Operasional</h1>
+                <p>Manajemen Rekapitulasi Pengiriman & Catatan Kasbon Supir</p>
+            </div>
         </header>
 
-        <section class="card">
-            <h2>+ Tambah Data Baru</h2>
-            <form id="shipping-form" class="form-grid">
-                <div class="form-group">
-                    <label for="tanggal">Tanggal</label>
-                    <input type="date" id="tanggal" required>
-                </div>
-                <div class="form-group">
-                    <label for="supir">Supir</label>
-                    <input type="text" id="supir" placeholder="Nama Supir" required>
-                </div>
-                <div class="form-group">
-                    <label for="mobil">Mobil</label>
-                    <input type="text" id="mobil" placeholder="No. Polisi / Jenis" required>
-                </div>
-                <div class="form-group">
-                    <label for="jumlah-drum">Jumlah Drum</label>
-                    <input type="number" id="jumlah-drum" placeholder="0" min="0" required>
-                </div>
-                <div class="form-group">
-                    <label for="harga-drum">Harga per Drum (Rp)</label>
-                    <input type="number" id="harga-drum" placeholder="0" min="0" required>
-                </div>
-                <div class="form-group">
-                    <label for="keterangan">Keterangan</label>
-                    <input type="text" id="keterangan" placeholder="Contoh: Lunas / Titip Bensin / dll">
-                </div>
-                <div class="form-group">
-                    <label>Total Estimasi</label>
-                    <div class="total-preview" id="total-estimasi">Rp 0</div>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Tambah ke Tabel</button>
-                    <button type="button" id="reset-form" class="btn btn-secondary">Reset Form</button>
-                </div>
-            </form>
-        </section>
+        <!-- Navbar Navigation -->
+        <nav class="navbar no-print">
+            <button class="nav-tab active" data-tab="tab-pengiriman">
+                <span class="icon">📦</span> Rekap Data Pengiriman
+            </button>
+            <button class="nav-tab" data-tab="tab-kasbon">
+                <span class="icon">💸</span> Catatan Kasbon Supir
+            </button>
+        </nav>
 
-        <section class="card" id="print-area">
-            <div class="table-header">
-                <h2>Tabel Rekapitulasi Data Pengiriman</h2>
-                <span class="badge" id="data-count">0 Data</span>
-            </div>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Tanggal</th>
-                            <th>Supir</th>
-                            <th>Mobil</th>
-                            <th>Drum</th>
-                            <th>Harga</th>
-                            <th>Total</th>
-                            <th>Keterangan</th>
-                            <th class="no-print">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-body"></tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="3" class="text-bold">TOTAL REKAPITULASI</td>
-                            <td id="grand-total-drum" class="text-bold">0</td>
-                            <td class="text-bold">-</td>
-                            <td id="grand-total-harga" class="text-bold">Rp 0</td>
-                            <td>-</td>
-                            <td class="no-print"></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-            <div class="action-buttons no-print">
-                <button type="button" id="download-pdf" class="btn btn-danger">📄 Unduh PDF Nota</button>
-            </div>
-        </section>
+        <!-- ================= TAB 1: REKAP DATA PENGIRIMAN ================= -->
+        <main id="tab-pengiriman" class="tab-content active">
+            <!-- Form Card -->
+            <section class="card">
+                <h2>+ Tambah Data Pengiriman</h2>
+                <form id="shipping-form" class="form-grid">
+                    <div class="form-group">
+                        <label for="tanggal">Tanggal</label>
+                        <input type="date" id="tanggal" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="supir">Supir</label>
+                        <input type="text" id="supir" placeholder="Nama Supir" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mobil">Mobil</label>
+                        <input type="text" id="mobil" placeholder="No. Polisi / Jenis" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="jumlah-drum">Jumlah Drum</label>
+                        <input type="number" id="jumlah-drum" placeholder="0" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="harga-drum">Harga per Drum (Rp)</label>
+                        <input type="number" id="harga-drum" placeholder="0" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="keterangan">Keterangan</label>
+                        <input type="text" id="keterangan" placeholder="Contoh: Lunas / Transfer">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Total Estimasi</label>
+                        <div class="total-preview" id="total-estimasi">Rp 0</div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Tambah ke Tabel</button>
+                        <button type="button" id="reset-form" class="btn btn-secondary">Reset Form</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Table Card -->
+            <section class="card" id="print-area">
+                <div class="table-header">
+                    <h2>Tabel Rekapitulasi Data Pengiriman</h2>
+                    <span class="badge" id="data-count">0 Data</span>
+                </div>
+
+                <div class="table-responsive">
+                    <table id="rekap-table">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Supir</th>
+                                <th>Mobil</th>
+                                <th>Drum</th>
+                                <th>Harga</th>
+                                <th>Total</th>
+                                <th>Keterangan</th>
+                                <th class="no-print">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <!-- Data dimasukkan lewat JS -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-bold">TOTAL REKAPITULASI</td>
+                                <td id="grand-total-drum" class="text-bold">0</td>
+                                <td class="text-bold">-</td>
+                                <td id="grand-total-harga" class="text-bold">Rp 0</td>
+                                <td></td>
+                                <td class="no-print"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="action-buttons no-print">
+                    <button type="button" id="download-pdf" class="btn btn-danger">📄 Unduh PDF Nota</button>
+                </div>
+            </section>
+        </main>
+
+        <!-- ================= TAB 2: CATATAN KASBON ================= -->
+        <main id="tab-kasbon" class="tab-content">
+            <section class="card">
+                <h2>+ Catat Kasbon / Pinjaman Baru</h2>
+                <form id="kasbon-form" class="form-grid">
+                    <div class="form-group">
+                        <label for="kasbon-tanggal">Tanggal</label>
+                        <input type="date" id="kasbon-tanggal" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kasbon-supir">Nama Supir</label>
+                        <input type="text" id="kasbon-supir" placeholder="Nama Supir" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kasbon-nominal">Nominal Kasbon (Rp)</label>
+                        <input type="number" id="kasbon-nominal" placeholder="0" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kasbon-keterangan">Keterangan / Keperluan</label>
+                        <input type="text" id="kasbon-keterangan" placeholder="Contoh: Titip Bensin / Pinjam Dulu">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Simpan Kasbon</button>
+                        <button type="button" id="kasbon-reset" class="btn btn-secondary">Reset</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="card">
+                <div class="table-header">
+                    <h2>Tabel Rekapitulasi Kasbon Supir</h2>
+                    <span class="badge badge-warning" id="kasbon-count">0 Catatan</span>
+                </div>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Nama Supir</th>
+                                <th>Nominal Kasbon</th>
+                                <th>Keterangan</th>
+                                <th class="no-print">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="kasbon-table-body">
+                            <!-- Data Kasbon dimasukkan via JS -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2" class="text-bold">TOTAL KASBON OUTSTANDING</td>
+                                <td id="grand-total-kasbon" class="text-bold text-danger">Rp 0</td>
+                                <td></td>
+                                <td class="no-print"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </section>
+        </main>
     </div>
 
     <script src="script.js"></script>

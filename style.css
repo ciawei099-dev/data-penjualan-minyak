@@ -26,12 +26,13 @@ body {
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 1050px;
     margin: 0 auto;
 }
 
+/* Header */
 .header {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     border-bottom: 2px solid var(--primary-color);
     padding-bottom: 10px;
 }
@@ -46,10 +47,66 @@ body {
     font-size: 0.95rem;
 }
 
+/* Navbar Estetik */
+.navbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    background: #ffffff;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.nav-tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.nav-tab:hover {
+    background: #f0f4f1;
+    color: var(--primary-color);
+}
+
+.nav-tab.active {
+    background: var(--primary-color);
+    color: #ffffff;
+    box-shadow: 0 3px 8px rgba(13, 122, 64, 0.25);
+}
+
+/* Tab Content Visibility */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Card */
 .card {
     background: var(--card-bg);
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     margin-bottom: 20px;
     border: 1px solid var(--border-color);
@@ -83,20 +140,21 @@ body {
 .form-group input {
     padding: 10px;
     border: 1px solid var(--border-color);
-    border-radius: 5px;
+    border-radius: 6px;
     outline: none;
     font-size: 0.9rem;
 }
 
 .form-group input:focus {
     border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(13, 122, 64, 0.15);
 }
 
 .total-preview {
     padding: 10px;
     background-color: #f8f9fa;
     border: 1px solid var(--border-color);
-    border-radius: 5px;
+    border-radius: 6px;
     font-weight: bold;
     color: var(--primary-color);
 }
@@ -112,7 +170,7 @@ body {
 .btn {
     padding: 10px 18px;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
     font-weight: 600;
     font-size: 0.9rem;
@@ -146,23 +204,18 @@ body {
     background-color: var(--danger-hover);
 }
 
-.btn-outline {
-    background-color: transparent;
-    border: 1px dashed var(--primary-color);
-    color: var(--primary-color);
-}
-
-.btn-outline:hover {
-    background-color: #eaf5ee;
-}
-
 .btn-delete {
     background-color: #ffebee;
     color: var(--danger-color);
     border: none;
-    padding: 5px 10px;
+    padding: 6px 12px;
     border-radius: 4px;
     cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-delete:hover {
+    background-color: #ffcdd2;
 }
 
 /* Tabel */
@@ -176,10 +229,15 @@ body {
 .badge {
     background-color: #e8f5e9;
     color: var(--primary-color);
-    padding: 4px 10px;
+    padding: 5px 12px;
     border-radius: 12px;
     font-size: 0.85rem;
     font-weight: bold;
+}
+
+.badge-warning {
+    background-color: #fff3e0;
+    color: #e65100;
 }
 
 .table-responsive {
@@ -205,11 +263,15 @@ th {
 }
 
 tfoot {
-    background-color: #e8f5e9;
+    background-color: #f1f8f3;
 }
 
 .text-bold {
     font-weight: bold;
+}
+
+.text-danger {
+    color: var(--danger-color);
 }
 
 .empty-row {
@@ -230,11 +292,58 @@ tfoot {
 
 /* Responsif HP */
 @media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+    }
     .form-actions, .action-buttons {
         flex-direction: column;
     }
 
     .form-actions .btn, .action-buttons .btn {
         width: 100%;
+    }
+}
+
+/* CSS Khusus Cetak / Export PDF */
+@media print {
+    body {
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .no-print, .form-actions, button, .navbar, .header, form {
+        display: none !important;
+    }
+
+    .card {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        page-break-inside: auto;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tfoot {
+        display: table-footer-group;
+    }
+
+    th, td {
+        padding: 8px 10px !important;
+        font-size: 11pt !important;
     }
 }
